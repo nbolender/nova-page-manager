@@ -33,6 +33,10 @@ class PrefixSlugField extends Slug
     {
         $attribute = $this->meta['translatable']['original_attribute'] ?? $this->attribute;
 
+        if (isset($this->fillCallback)) {
+            return call_user_func($this->fillCallback, $request, $model, $attribute, $attribute);
+        }
+
         $data = $request->get($attribute);
         $locales = NPM::getLocales();
 
